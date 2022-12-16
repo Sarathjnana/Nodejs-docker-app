@@ -42,5 +42,17 @@ jobs:
         docker build -t $ECR_REPOSITORY .
         docker tag docker-nodejs-app:latest 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
         docker push 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
+        
+  Deploy:
+    
+    name: run the image
+    runs-on: self-hosted
+    steps:
+    - name: pull and run image
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
+        docker pull 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
+        docker run -d -p 8080:8080 docker-nodejs-app:latest
+    
     
         
