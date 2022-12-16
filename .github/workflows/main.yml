@@ -52,7 +52,7 @@ jobs:
       run: |
         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
         docker pull 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
-        docker run -d -p 8080:8080 docker-nodejs-app:latest
+        docker run -d -p 8080:8080 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
     
     
         
