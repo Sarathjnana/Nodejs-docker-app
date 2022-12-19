@@ -41,6 +41,7 @@ jobs:
         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
         docker build -t $ECR_REPOSITORY .
         docker tag docker-nodejs-app:latest 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
+        aws ecr batch-delete-image --repository-name docker-nodejs-app --image-ids imageTag=latest
         docker push 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
         
   Deploy:
