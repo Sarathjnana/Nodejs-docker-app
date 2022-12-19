@@ -44,11 +44,11 @@ jobs:
         #aws ecr batch-delete-image --repository-name docker-nodejs-app --image-ids imageTag=latest
         docker push 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
         
-  Deploy:
+#   Deploy:
     
-    name: run the image
-    runs-on: self-hosted
-    steps:
+#     name: run the image
+#     runs-on: self-hosted
+#     steps:
     - name: pull and run image
       run: |
         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
