@@ -51,7 +51,7 @@ jobs:
     - name: pull and run image
       run: |
         aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
-        docker rm $(docker ps -aq)
+        docker rm -f $(docker ps -aq)
         docker rmi $(docker images -q)
         docker pull 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
         docker run -d -p 80:8080 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
