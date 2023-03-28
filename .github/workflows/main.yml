@@ -38,24 +38,7 @@ jobs:
         ECR_REPOSITORY: docker-nodejs-app
         IMAGE_TAG: latest
       run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
-        docker build -t $ECR_REPOSITORY .
-        docker tag docker-nodejs-app:latest 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
-        #aws ecr batch-delete-image --repository-name docker-nodejs-app --image-ids imageTag=latest
-        docker push 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
-        
-  Deploy:
-    needs: [build]
-    name: run the image
-    runs-on: self-hosted
-    steps:
-    - name: pull and run image
-      run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 118754473612.dkr.ecr.us-east-1.amazonaws.com
-        docker rm -f $(docker ps -aq)
-        docker rmi $(docker images -q)
-        docker pull 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
-        docker run -d -p 80:8080 118754473612.dkr.ecr.us-east-1.amazonaws.com/docker-nodejs-app:latest
-    
-    
-        
+        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y8b1x3k4
+        docker build -t github-actions-demo .
+        docker tag github-actions-demo:latest public.ecr.aws/y8b1x3k4/github-actions-demo:latest
+        docker push public.ecr.aws/y8b1x3k4/github-actions-demo:latest
