@@ -46,3 +46,18 @@ jobs:
         docker build -t github-actions-demo .
         docker tag github-actions-demo:latest public.ecr.aws/y8b1x3k4/github-actions-demo:latest
         docker push public.ecr.aws/y8b1x3k4/github-actions-demo:latest
+  
+  
+  Deploy:
+    needs: [build]
+    name: run the image
+    runs-on: self-hosted
+    steps:
+    - name: pull and run image
+      run: |
+        sudo apt update
+        sudo apt install awscli -y
+        sudo apt install docker.io -y
+        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/y8b1x3k4
+        docker pull public.ecr.aws/y8b1x3k4/github-actions-demo:latest
+        docker run -d -p 80:8080 public.ecr.aws/y8b1x3k4/github-actions-demo:latest
